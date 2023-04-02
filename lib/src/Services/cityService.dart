@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:weather/src/Model/cityDatabaseModel.dart';
 import 'package:http/http.dart' as http;
+
 class CityService{
   final ROOT = "https://crazyhost123.000webhostapp.com/city.php";
   final _GET_ALL_ACTION = 'GET_ALL';
