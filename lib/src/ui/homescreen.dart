@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
+  //
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('EEEE, MMMM d, y').format(now);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -73,7 +78,7 @@ class MyHomePage extends StatelessWidget {
                       ),
                     ),
                     Align(
-                      alignment: Alignment(0.0, 1.0),
+                      alignment: Alignment(0.0, 1.27),
                       child: SizedBox(
                         height: 10,
                         width: 10,
@@ -81,7 +86,7 @@ class MyHomePage extends StatelessWidget {
                           minWidth: 0.0,
                           maxWidth: MediaQuery.of(context).size.width,
                           minHeight: 0.0,
-                          maxHeight: (MediaQuery.of(context).size.height / 4),
+                          maxHeight: (MediaQuery.of(context).size.height / 2.85),
                           child: Stack(
                             children: <Widget>[
                               Container(
@@ -93,6 +98,91 @@ class MyHomePage extends StatelessWidget {
                                   elevation: 5,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20)
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.only(top: 15, left: 20, right: 20),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Center(
+                                              child: Text("Ha Noi",// bỏ data thành phố vào đây
+                                                style: TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: 'flutterfonts'
+                                                ),
+                                              ),
+                                            ),
+                                            Center(
+                                              child: Text(formattedDate,
+                                              style: TextStyle(
+                                                color: Colors.black54,
+                                                  fontSize: 14,
+                                                  fontFamily: 'flutterfonts'
+                                              ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Divider(),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Container(
+                                            padding: EdgeInsets.only(left: 50),
+                                            child: Column(
+                                              children: <Widget>[
+                                                Text("overcast clouds:", //bỏ data như kiểu trời u ám, trời nắng các th
+                                                style: TextStyle(
+                                                  color: Colors.black54,
+                                                    fontSize: 14,
+                                                    fontFamily: 'flutterfonts'
+                                                ),
+                                                ),
+                                                SizedBox(height: 3,),
+                                                Text("data", // bỏ data nhiệt độ vào đây
+                                                style: TextStyle(color: Colors.black54,
+                                                fontFamily: 'flutterfonts',
+                                                fontSize: 30),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.only(right: 20),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                Container(
+                                                  width: 120,
+                                                  height: 120,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(fit: BoxFit.cover,
+                                                        image: AssetImage('lib/Input/râm mát.png'),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  child: Text("sức gió", // bỏ data vào đây
+                                                  style: TextStyle(
+                                                    color: Colors.black54,
+                                                    fontFamily: 'flutterfonts',
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
