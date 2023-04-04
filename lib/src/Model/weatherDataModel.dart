@@ -7,6 +7,7 @@ class Weather {
   var luongmua;
   var khongkhi;
   var thoigian;
+  var image;
 
   Weather(
       {
@@ -17,7 +18,9 @@ class Weather {
         required this.doam,
         required this.luongmua,
         required this.khongkhi,
-        required this.thoigian});
+        required this.thoigian,
+        required this.image});
+
 
   @override
   String toString() {
@@ -29,6 +32,7 @@ class Weather {
         'doam: $doam, ' + "\n" +
         'luongmua: $luongmua,' + "\n" +
         ' khongkhi: $khongkhi, ' + "\n" +
-        'thoigian: $thoigian}'  + "\n";
+        'thoigian: $thoigian}'  + "\n" +
+        'image: $image}'  + "\n";
   }
 }

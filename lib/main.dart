@@ -2,40 +2,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
+import 'package:weather/src/Model/cityDataModel.dart';
 import 'package:weather/src/Services/cityService.dart';
 import 'package:weather/src/Services/historyService.dart';
 import 'package:weather/src/Services/locationService.dart';
 import 'package:weather/src/Services/weatherService.dart';
 import 'package:weather/src/ui/homescreen.dart';
 Future<void> main() async{
-
-  var data = await info();
-  // print(await getAllCity());
-  // print(await getCityByName());
-  // print(await getAllHistory());
-  print(await getHistoryByCity());
-  // print(await getHistoryByCountry());
-  print(await getHistoryByDate());
-  // print(await addHistory());
-  // print(await getAllHistory());
-  // for (int i = 4; i <=16; i++) {
-  //   print(await deleteHistory(i.toString()));
-  // }
-
-
-  print(data);
   runApp(const MyApp());
-
 
 }
 var clientWeather = WeatherService();
 var clientCity = CityService();
 var clientHistory = HistoryService();
 
-info() async {
-  //var position = await GetPosition();
-  return await clientWeather.getData("London");
-}
 
 getAllCity() async {
   return await clientCity.getAllCity();

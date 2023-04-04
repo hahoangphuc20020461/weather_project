@@ -33,6 +33,7 @@ dependencies:
     sdk: flutter
   another_flutter_splash_screen: ^1.1.4
   animated_splash_screen: ^1.3.0
+  intl: ^0.18.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -41,6 +42,8 @@ dependencies:
   geolocator: ^9.0.2
   http: ^0.13.5
   mysql1: ^0.20.0
+  geocoding: ^2.1.0
+  tiengviet: ^0.5.0
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +74,23 @@ flutter:
   assets:
     - lib/Input/weather-icon-gif-23.gif
     - lib/Input/clouds.jpg
+    - lib/Input/cloudLight.jpg
+    - lib/Input/lightThunder.jpg
+    - lib/Input/morning.png
+    - lib/Input/sun.jpg
+    - lib/Input/night.jpg
+    - lib/Input/nightThunder.png
+    - lib/Input/rainLight.jpg
+    - lib/Input/rainNight.jpg
+    - lib/Input/storm.jpg
+    - lib/Input/sunset.png
+    - lib/Input/tornado.jpg
+    - lib/Input/windyLight.jpg
+    - lib/Input/windyNight.png
+    - lib/Input/mistNight.png
+    - lib/Input/mistLight.png
+    - lib/Input/winter.png
+    - lib/Input/winterNight.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
