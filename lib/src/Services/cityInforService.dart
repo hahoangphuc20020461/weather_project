@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:weather/src/Model/cityDatabaseModel.dart';
+import 'package:weather/src/Model/cityInforModel.dart';
 import 'package:http/http.dart' as http;
 
-class CityService{
+class CityInforService{
   final ROOT = "https://crazyhost123.000webhostapp.com/city.php";
   final _GET_ALL_ACTION = 'GET_ALL';
   final _GET_BY_NAME_ACTION = 'GET_BY_NAME';
 
-  Future<List<CityDB>> getAllCity() async {
+  Future<List<CityInfor>> getAllCity() async {
     try {
       var map = <String, dynamic>{};
       map['action'] = _GET_ALL_ACTION;
@@ -17,7 +17,7 @@ class CityService{
       // print("get all city: ${response.body}");
 
       if (200 == response.statusCode) {
-        List<CityDB> list = parseResponse(response.body);
+        List<CityInfor> list = parseResponse(response.body);
         return list;
       } else {
         return [];
@@ -29,12 +29,12 @@ class CityService{
 
   }
 
-  List<CityDB> parseResponse(String responseBody) {
+  List<CityInfor> parseResponse(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<CityDB>((json) => CityDB.fromJson(json)).toList();
+    return parsed.map<CityInfor>((json) => CityInfor.fromJson(json)).toList();
   }
 
-  Future<List<CityDB>> getCityByName(String cityName) async {
+  Future<List<CityInfor>> getCityByName(String cityName) async {
     try {
       var map = <String, dynamic>{};
       map['action'] = _GET_BY_NAME_ACTION;
@@ -44,7 +44,7 @@ class CityService{
       // print("get city by cityName: ${response.body}");
 
       if (200 == response.statusCode) {
-        List<CityDB> list = parseResponse(response.body);
+        List<CityInfor> list = parseResponse(response.body);
         return list;
       } else {
         return [];

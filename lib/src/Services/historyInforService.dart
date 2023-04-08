@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:weather/src/Model/historyDatabaseModel.dart';
+import 'package:weather/src/Model/historyInforModel.dart';
 
-class HistoryService{
+class HistoryInforService{
   final ROOT = "https://crazyhost123.000webhostapp.com/history.php";
   final _GET_ALL_ACTION = 'GET_ALL';
   final _GET_BY_CITY_ACTION = 'GET_BY_CITY';
@@ -13,7 +13,7 @@ class HistoryService{
   final _DELETE_ACTION = 'DELETE';
 
 
-  Future<List<HistoryDB>> getAllHistory() async {
+  Future<List<HistoryInfor>> getAllHistory() async {
     try {
       var map = <String, dynamic>{};
       map['action'] = _GET_ALL_ACTION;
@@ -22,7 +22,7 @@ class HistoryService{
       // print("get all history: ${response.body}");
 
       if (200 == response.statusCode) {
-        List<HistoryDB> list = parseResponse(response.body);
+        List<HistoryInfor> list = parseResponse(response.body);
         return list;
       } else {
         return [];
@@ -34,12 +34,12 @@ class HistoryService{
 
   }
 
-  List<HistoryDB> parseResponse(String responseBody) {
+  List<HistoryInfor> parseResponse(String responseBody) {
     final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<HistoryDB>((json) => HistoryDB.fromJson(json)).toList();
+    return parsed.map<HistoryInfor>((json) => HistoryInfor.fromJson(json)).toList();
   }
 
-  Future<List<HistoryDB>> getHistoryByCity(String cityName) async {
+  Future<List<HistoryInfor>> getHistoryByCity(String cityName) async {
     try {
       var map = <String, dynamic>{};
       map['action'] = _GET_BY_CITY_ACTION;
@@ -49,7 +49,7 @@ class HistoryService{
       print("get history by city: ${response.body}");
 
       if (200 == response.statusCode) {
-        List<HistoryDB> list = parseResponse(response.body);
+        List<HistoryInfor> list = parseResponse(response.body);
         return list;
       } else {
         return [];
@@ -60,7 +60,7 @@ class HistoryService{
 
   }
 
-  Future<List<HistoryDB>> getHistoryByCountry(String countryName) async {
+  Future<List<HistoryInfor>> getHistoryByCountry(String countryName) async {
     try {
       var map = <String, dynamic>{};
       map['action'] = _GET_BY_COUNTRY_ACTION;
@@ -70,7 +70,7 @@ class HistoryService{
       // print("get history by country: ${response.body}");
 
       if (200 == response.statusCode) {
-        List<HistoryDB> list = parseResponse(response.body);
+        List<HistoryInfor> list = parseResponse(response.body);
         return list;
       } else {
         return [];
@@ -81,7 +81,7 @@ class HistoryService{
 
   }
 
-  Future<List<HistoryDB>> getHistoryByDate(String startDate, String endDate) async {
+  Future<List<HistoryInfor>> getHistoryByDate(String startDate, String endDate) async {
     try {
       var map = <String, dynamic>{};
       map['action'] = _GET_BY_DATE_ACTION;
@@ -91,7 +91,7 @@ class HistoryService{
       final response = await http.post(uri, body: map);
       print("get history by date: ${response.body}");
       if (200 == response.statusCode) {
-        List<HistoryDB> list = parseResponse(response.body);
+        List<HistoryInfor> list = parseResponse(response.body);
         return list;
       } else {
         return [];

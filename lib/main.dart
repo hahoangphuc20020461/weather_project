@@ -2,19 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
-import 'package:weather/src/Model/cityDataModel.dart';
-import 'package:weather/src/Services/cityService.dart';
-import 'package:weather/src/Services/historyService.dart';
-import 'package:weather/src/Services/locationService.dart';
-import 'package:weather/src/Services/weatherService.dart';
+import 'package:weather/src/Model/cityWeatherModel.dart';
+import 'package:weather/src/Services/cityInforService.dart';
+import 'package:weather/src/Services/historyInforService.dart';
+import 'package:weather/src/Services/locationInforService.dart';
+import 'package:weather/src/Services/cityWeatherService.dart';
 import 'package:weather/src/ui/homescreen.dart';
 Future<void> main() async{
   runApp(const MyApp());
 
 }
-var clientWeather = WeatherService();
-var clientCity = CityService();
-var clientHistory = HistoryService();
+var clientWeather = CityWeatherService();
+var clientCity = CityInforService();
+var clientHistory = HistoryInforService();
 
 
 getAllCity() async {

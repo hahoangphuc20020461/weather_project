@@ -1,14 +1,14 @@
 
-import 'package:weather/src/Model/weatherDataModel.dart';
+import 'package:weather/src/Model/weatherModel.dart';
 
-class City {
+class CityWeather {
   var cityName;
   var countryName;
   List<Weather> weatherDay;
   List<Weather> weatherHour;
   Weather weatherCurrent;
 
-  City(
+  CityWeather(
   { required this.cityName,
     required this.countryName,
     required this.weatherDay,

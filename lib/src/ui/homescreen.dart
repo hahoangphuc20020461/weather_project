@@ -1,15 +1,12 @@
 
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
-import 'package:tiengviet/tiengviet.dart';
-import 'package:weather/src/Model/cityDataModel.dart';
-import 'package:weather/src/ui/createWeatherCity.dart';
-
-import '../Services/cityService.dart';
-import '../Services/historyService.dart';
-import '../Services/weatherService.dart';
+import 'package:weather/src/Contract/cityWeatherViewContact.dart';
+import 'package:weather/src/Contract/historyInforViewContract.dart';
+import 'package:weather/src/Model/cityWeatherModel.dart';
+import 'package:weather/src/Model/historyInforModel.dart';
+import 'package:weather/src/Presenter/cityWeatherPresenter.dart';
+import 'package:weather/src/Presenter/historyInforPresenter.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -18,83 +15,24 @@ class MyHomePage extends StatefulWidget {
 
 }
 
-class _MyHomePageState extends State<MyHomePage>{
+class _MyHomePageState extends State<MyHomePage> implements CityWeatherViewContract, HistoryInforViewContract{
   late bool _isLoading;
-  var clientCity = CityService();
-  var clientHistory = HistoryService();
-  var clientWeather = WeatherService();
-  var createWeather = CreateWeatherCity();
   dynamic city;
-  String _currentAddress = "";
+  dynamic historys;
+  late CityWeatherPresenter _cityWeatherPresenter;
+  late HistoryInforPresenter _historyInforPresenter;
 
-  _getCurrentLocation() async {
-    try {
-      LocationPermission permission;
-      permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.deniedForever) {
-          return Future.error('Location Not Available');
-        }
-      }
-    } catch(e) {
-      print(e);
-    }
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((Position position) {
-      setState(() {
-        //Pass the lat and long to the function
-        _getAddressFromLatLng(position.latitude, position.longitude).then((value) {
-          //get data when get corrected location
-          fetchWeatherData(_currentAddress).then((value) {
-            // start when get data corrected
-            setState(() {
-              _isLoading = false;
-            });
-          });
-        });
-
-      });
-    }).catchError((e) {
-      print(e);
-    });
-  }
-
-  Future _getAddressFromLatLng(double latitude, double longitude) async {
-    try {
-      List<Placemark> p = await placemarkFromCoordinates(latitude, longitude);
-
-      Placemark place = p[0];
-
-      setState(() {
-        _currentAddress = "${place.administrativeArea}";
-
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-  Future fetchWeatherData(String inputLocation) async {
-    try {
-      inputLocation = TiengViet.parse(inputLocation);
-      final weatherData = await clientWeather.fetchData(inputLocation);
-      setState(() {
-
-        city = City(cityName: weatherData["location"]["name"],
-            countryName: weatherData["location"]["country"],
-            weatherDay: createWeather.setListWeatherDay(weatherData),
-            weatherHour: createWeather.setListWeatherHour(weatherData),
-            weatherCurrent: createWeather.setWeatherCurrent(weatherData));
-      });
-    } catch (e) {
-      print(e);
-      //debugPrint(e)
-    }
-  }
   @override
   void initState() {
-    _getCurrentLocation();
+    _cityWeatherPresenter = CityWeatherPresenter();
+    _cityWeatherPresenter.attachView(this);
+
+    _historyInforPresenter = HistoryInforPresenter();
+    _historyInforPresenter.attachView(this);
     _isLoading = true;
+    _historyInforPresenter.loadAllHistory();
+    _cityWeatherPresenter.loadCityWeatherFromLocation();
+
     super.initState();
   }
 
@@ -165,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage>{
                           ),
                           textInputAction: TextInputAction.search,
                           onSubmitted: (value) {
-                            fetchWeatherData(value);
+                            _cityWeatherPresenter.loadCityWeather(value);
                           },
                           decoration: InputDecoration(
                             suffixIcon: const Icon(Icons.search, color: Colors.white,),
@@ -325,5 +263,47 @@ class _MyHomePageState extends State<MyHomePage>{
             ],
       )
     );
+  }
+
+  @override
+  void onLoadCityWeatherComplete(CityWeather cityWeather, bool isLoading) {
+    setState(() {
+      city = cityWeather;
+      _isLoading = isLoading;
+      _historyInforPresenter.loadAddHistory('${city?.cityName}', '${city?.countryName}');
+    });
+  }
+
+  @override
+  void onLoadAllHistoryComplete(List<HistoryInfor> allHistory) {
+    setState(() {
+      historys = allHistory;
+    });
+  }
+
+  @override
+  void onLoadHistoryByCityNameComplete(List<HistoryInfor> allHistory) {
+    // TODO: implement onLoadHistoryByCityNameComplete
+  }
+
+  @override
+  void onLoadHistoryByCountryComplete(List<HistoryInfor> allHistory) {
+    // TODO: implement onLoadHistoryByCountryComplete
+  }
+
+  @override
+  void onLoadHistoryByDateomplete(List<HistoryInfor> allHistory) {
+    // TODO: implement onLoadHistoryByDateomplete
+  }
+
+  @override
+  void onLoadAddHistory() {
+    _historyInforPresenter.loadAllHistory();
+    print(historys);
+  }
+
+  @override
+  void onLoadDeleteHistory() {
+    // TODO: implement onLoadDeleteHistory
   }
 }

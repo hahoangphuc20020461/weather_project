@@ -1,5 +1,5 @@
 
-import '../Model/weatherDataModel.dart';
+import '../Model/weatherModel.dart';
 
 class CreateWeatherCity {
 
